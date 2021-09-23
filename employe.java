@@ -12,17 +12,27 @@ public class employe {
     public static agenda getAgenda() {
         return a;
     }
-    public static class MonTraitement extends Thread {
+    public static class MonTraitement implements Runnable {
+
+        protected int jour;
+        protected int priorite;
+        protected String libelle;
+
+        public MonTraitement(int jour, int priorite, String libelle) {
+            this.jour = jour;
+            this.priorite = priorite;
+            this.libelle = libelle;
+        }
 
         @Override
         public void run() {
-            employe.getAgenda().addTache(25, 1, "Document à rendre");
+            employe.getAgenda().addTache(jour, priorite, libelle);
 
         }
     }
     public static void main(String[] args) {
-        Runnable runnable = new MonTraitement();
-        Thread thread = new Thread(runnable);
+        MonTraitement monTraitement = new MonTraitement(20, 1, "Document à rendre");
+        Thread thread = new Thread(monTraitement);
         thread.start();
     }
 }
