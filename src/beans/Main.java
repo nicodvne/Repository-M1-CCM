@@ -11,6 +11,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
+
+    public static synchronized int getNbEmployee() {
+        nbEmployee++;
+        return nbEmployee;
+    }
+
+    private static int nbEmployee;
+
     public static void main(String[] args) {
         List<Task> listOfTasks = new LinkedList<>();
         Agenda agenda = new Agenda();
@@ -43,13 +51,18 @@ public class Main {
         System.out.println(agenda);
         t1.setDone(true);
         System.out.println(agenda.getDoneTasks());
+        List<Employee> employeeList = new ArrayList<>();
 
         try{
             ServerSocket serversocket = new ServerSocket(4444,10);
             while (true){
                 Socket socket = serversocket.accept();
                 System.out.println("Connected to "+ socket.getLocalAddress());
-                new Thread(new GestionClient(socket,agenda)).start();
+                GestionClient gc = new GestionClient(socket,agenda);
+                new Thread(gc).start();
+                employeeList.add(gc.getEmployee());
+                System.out.println("List Of Employee : " + employeeList);
+
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -7,6 +7,15 @@ public class GestionClient implements Runnable {
     private final Socket socket;
     private final BufferedReader reader;
     private PrintWriter writer;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     private Employee employee;
 
     public GestionClient(Socket socket, Agenda agenda) throws IOException {
