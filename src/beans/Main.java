@@ -29,12 +29,7 @@ public class Main {
         t1.setPriority(0);
         t1.setStart_date(LocalDateTime.now());
 
-        t1.addPropertyChangeListener(new PropertyChangeListener() {
-                                         public void propertyChange(PropertyChangeEvent event) {
-                                             System.out.println("propertyChange : valeur = " + event.getNewValue());
-
-                                         }
-                                     }
+        t1.addPropertyChangeListener(event -> System.out.println("propertyChange : valeur = " + event.getNewValue())
         );
 
         Task t2 = new Task();
@@ -52,25 +47,28 @@ public class Main {
         t1.setDone(true);
         System.out.println(agenda.getDoneTasks());
         List<Employee> employeeList = new ArrayList<>();
+        List<ThreadCreateEmployee> threadCreateEmployeeArrayList = new ArrayList<>();
 
-        try{
-            ServerSocket serversocket = new ServerSocket(4444,10);
-            while (true){
+        for (int i = 0; i < 50; i++) {
+            ThreadCreateEmployee createEmployee = new ThreadCreateEmployee();
+            Thread t = new Thread(createEmployee);
+            t.start();
+            threadCreateEmployeeArrayList.add(createEmployee);
+        }
+
+
+        try {
+            ServerSocket serversocket = new ServerSocket(4444, 10);
+            while (true) {
                 Socket socket = serversocket.accept();
-                System.out.println("Connected to "+ socket.getLocalAddress());
-                GestionClient gc = new GestionClient(socket,agenda);
+                System.out.println("Connected to " + socket.getLocalAddress());
+                GestionClient gc = new GestionClient(socket, agenda);
                 new Thread(gc).start();
                 employeeList.add(gc.getEmployee());
                 System.out.println("List Of Employee : " + employeeList);
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
-
 }

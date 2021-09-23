@@ -29,17 +29,7 @@ public class GestionClient implements Runnable {
 
     @Override
     public void run() {
-        String dataReceived = "";
-        while (true) {
-            try {
-                 dataReceived = reader.readLine();
-                if (!dataReceived.equals("")){
-                    break;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+ 
 
         writer.println("---------------------------------\n");
         writer.println("Bienvenue employée : " + employee + "\n");
