@@ -11,7 +11,7 @@ public class Serveur {
 	public static void main(String[] args) {
 		
 		try {
-			ServerSocket servsocket = new ServerSocket(80, 10);
+			ServerSocket servsocket = new ServerSocket(2001, 10);
 			while(true) {
 				Socket socket = servsocket.accept(); 
 				new Thread(new GestionClient(socket)).start();

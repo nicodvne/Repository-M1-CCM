@@ -15,12 +15,18 @@ public class GestionClient implements Runnable {
 	@Override
 	public void run() {
 		try {
-			while(true) {
-				Employer employer = new Employer();
-			}
+			Employer employer = new Employer();
+			//while(true) {
+				
+			//}
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
+		
+		writer.println("Bonjour");
+		
+		writer.flush();
+		writer.close();
 
 	}
 	
